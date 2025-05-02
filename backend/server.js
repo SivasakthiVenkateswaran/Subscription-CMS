@@ -142,8 +142,7 @@ const UserSchema = {
     timestamp: Date         // When the action occurred
   };
   
-  // Example indexes to optimize queries
-  // User email index for login queries
+
   db.users.createIndex({ email: 1 }, { unique: true });
   
   // Index for finding active subscription plans by category
