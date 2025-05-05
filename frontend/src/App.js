@@ -1,11 +1,8 @@
-import './App.css';
+import React from "react";
+import SubscriptionDashboard from "./components/SubscriptionDashboard";
 
 function App() {
-  return (
-    <div className="App">
-       <h1>Subscriptions CMS</h1>
-    </div>
-  );
+  return <SubscriptionDashboard />;
 }
 
 export default App;

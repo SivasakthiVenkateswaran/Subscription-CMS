@@ -1,0 +1,55 @@
+.dashboard-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .subscription-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .subscription-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .subscription-form input[type="text"],
+  .subscription-form input[type="number"],
+  .subscription-form input[type="date"] {
+    width: 100%;
+    padding: 8px 12px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .subscription-form label {
+    margin-bottom: 6px;
+    display: block;
+    font-weight: bold;
+  }
+  
+  .subscription-form input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
