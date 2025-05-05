@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | SubManage</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+    }
+
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background-color: #2d3748;
+      color: white;
+      position: fixed;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .sidebar a:hover {
+      background-color: #4a5568;
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 40px;
+    }
+
+    .header {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-danger {
+      background-color: #e53e3e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>📦 SubManage</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">My Subscription</a>
+    <a href="#">Billing History</a>
+    <a href="#">Settings</a>
+    <hr style="border: 1px solid #4a5568;" />
+    <!-- Show only for admins -->
+    <a href="#">User Management</a>
+    <a href="#">Plan Management</a>
+    <a href="#">Reports</a>
+    <a href="#">Admin Settings</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h1>Welcome to your Dashboard</h1>
+      <p>Manage your subscription and account settings here.</p>
+    </div>
+
+    <div class="card">
+      <h2>Subscription Summary</h2>
+      <p>Plan: <strong>Premium Monthly</strong></p>
+      <p>Status: <strong>Active</strong></p>
+      <p>Next Billing Date: <strong>May 30, 2025</strong></p>
+      <button class="btn">Change Plan</button>
+      <button class="btn btn-danger">Cancel Subscription</button>
+    </div>
+
+    <div class="card">
+      <h2>Recent Payments</h2>
+      <ul>
+        <li>April 30, 2025 – $29.99 – Paid</li>
+        <li>March 30, 2025 – $29.99 – Paid</li>
+      </ul>
+    </div>
+  </div>
+</body>
