@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SubscriptionTable from "./SubscriptionTable";
 import './SubscriptionDashboard.css';
+
 const API_URL = "http://localhost:5000/api/subscriptions";
 
 export default function SubscriptionDashboard() {
@@ -17,9 +18,29 @@ export default function SubscriptionDashboard() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
+  // Redirect to login if token not found
   useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/"; // redirect to login page
+    }
+  }, []);
+
+  // Fetch subscriptions
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch(API_URL, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Unauthorized or Failed to fetch data");
+        }
+        return res.json();
+      })
       .then(setSubscriptions)
       .catch(console.error);
   }, []);
@@ -34,6 +55,7 @@ export default function SubscriptionDashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
 
     const data = {
       platform: formData.platform,
@@ -44,41 +66,62 @@ export default function SubscriptionDashboard() {
       autoRenewal: formData.autoRenewal,
     };
 
-    if (editingId) {
-      const res = await fetch(`${API_URL}/${editingId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const updated = await res.json();
-      setSubscriptions((subs) =>
-        subs.map((s) => (s._id === updated._id ? updated : s))
+    try {
+      const res = await fetch(
+        editingId ? `${API_URL}/${editingId}` : API_URL,
+        {
+          method: editingId ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify(data),
+        }
       );
-      setEditingId(null);
-    } else {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const newSub = await res.json();
-      setSubscriptions([...subscriptions, newSub]);
-    }
 
-    setFormData({
-      platform: "",
-      plan: "",
-      price: "",
-      startDate: "",
-      expiryDate: "",
-      autoRenewal: false,
-    });
-    setShowForm(false);
+      if (!res.ok) throw new Error("Submission failed");
+
+      const result = await res.json();
+
+      if (editingId) {
+        setSubscriptions((subs) =>
+          subs.map((s) => (s._id === result._id ? result : s))
+        );
+        setEditingId(null);
+      } else {
+        setSubscriptions([...subscriptions, result]);
+      }
+
+      setFormData({
+        platform: "",
+        plan: "",
+        price: "",
+        startDate: "",
+        expiryDate: "",
+        autoRenewal: false,
+      });
+
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const handleDelete = async (id) => {
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-    setSubscriptions(subscriptions.filter((sub) => sub._id !== id));
+    const token = localStorage.getItem("token");
+
+    try {
+      await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      setSubscriptions(subscriptions.filter((sub) => sub._id !== id));
+    } catch (error) {
+      console.error("Error deleting subscription:", error);
+    }
   };
 
   const handleEdit = (sub) => {
